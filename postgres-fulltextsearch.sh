@@ -1,6 +1,6 @@
 #!/bin/bash
-POSTGRE_SEARCH_DIR="/usr/share/postgresql/9.5/tsearch_data"
-POSTGRE_HOME="/etc/postgresql/9.5/main"
+POSTGRE_SEARCH_DIR="/usr/share/postgresql/9.4/tsearch_data"
+POSTGRE_HOME="/etc/postgresql/9.4/main"
 POSTGRE_DB_NAME="forge"
 
 #Downloading dictionary
