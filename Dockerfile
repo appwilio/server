@@ -21,6 +21,15 @@ RUN docker-php-ext-enable imagick imagick.so
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
+#Install postgres
+ADD postgres.sql /temp/postgres.sql
+ADD postgres-install.sh /temp/postgres-install.sh
+RUN /temp/postgres-install.sh
+
+##Add fulltextsearch
+ADD postgres-fulltextsearch.sh /temp/postgres-fulltextsearch.sh
+RUN /temp/postgres-fulltextsearch.sh
+
 ADD composer_installer.sh /temp/composer_installer.sh
 
 RUN /temp/composer_installer.sh
