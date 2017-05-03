@@ -12,3 +12,5 @@ sed -i -e "s/#work_mem = 4MB/work_mem = 200MB/g" /etc/postgresql/9.4/main/postgr
 service postgresql start
 
 sudo -u postgres psql -f /temp/postgres.sql
+
+service postgresql restart
