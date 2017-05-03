@@ -1,7 +1,7 @@
 #!/bin/bash
 POSTGRE_SEARCH_DIR="/usr/share/postgresql/9.4/tsearch_data"
 POSTGRE_HOME="/etc/postgresql/9.4/main"
-POSTGRE_DB_NAME="forge"
+#POSTGRE_DB_NAME="forge"
 
 #Downloading dictionary
 echo "Getting dictionary files"
@@ -17,15 +17,8 @@ cp /tmp/ru_RU.dic "$POSTGRE_SEARCH_DIR/ru_ru.dict"
 sed --in-place 's/FLAG/#FLAG/g' "$POSTGRE_SEARCH_DIR/ru_ru.affix"
 echo "Done!"
 
-#Import dictionary
-echo "Macking db ready"
-psql -U postgres -d $POSTGRE_DB_NAME -c "CREATE TEXT SEARCH DICTIONARY ispell_ru (template  =   ispell,dictfile  =   ru_ru,afffile   =   ru_ru,stopwords =   russian);"
-
-#Create config
-psql -U postgres -d $POSTGRE_DB_NAME -c "CREATE TEXT SEARCH CONFIGURATION ru ( COPY = russian );"
-psql -U postgres -d $POSTGRE_DB_NAME -c "ALTER TEXT SEARCH CONFIGURATION ru ALTER MAPPING FOR word, hword, hword_part WITH ispell_ru, russian_stem;"
-psql -U postgres -d $POSTGRE_DB_NAME -c "SET default_text_search_config = 'ru';"
-echo "Done!"
+/etc/init.d/postgresql start
+sudo -u postgres psql -d forge -f /temp/postgres-fulltextsearch.sql
 
 #Default search setup
 echo "Change postgresql.conf"
